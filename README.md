@@ -1,20 +1,21 @@
 
-### Helium (Windows) Updater
+## Helium (Windows) Updater
 
 Simply grabs the latest release from github.com/imputnet/helium-windows and installs.
 
 After its been run once, it will keep a .version file to avoid re-downloading the same version.
 
 ---
-If you download the executable Windows Defender will probably mark it as a virus. You can
-either choose to trust me and add an exception, or you could just build it yourself.
-
+### Build yourself
 Install Go: https://go.dev/doc/install
 
-Download or clone the repository, then cd in and run:
-```
-go build
-```
+Download or clone the repository, then cd in and run `go build`.
+
+---
+There are prebuilt executables available in Releases (if you're a risk-taker), but they're unsigned so Windows Defender will
+flag them. Defender might even flag your own executable. To add an exception:
+
+> Windows Security > Virus & Threat Protection > Manage settings > Exclusions > Add > _path to helium_updater.exe_
 
 ---
 ### Run on login
