@@ -10,6 +10,7 @@ import (
     "path/filepath"
     "runtime"
     "strings"
+    "time"
 
     "github.com/google/go-github/v57/github"
 )
@@ -31,8 +32,24 @@ func downloadFile(filepath string, url string) error {
     return err
 }
 
+func userCachePath() (string, error) {
+    cacheDir, err := os.UserCacheDir()
+    if err != nil {
+        return "", err
+    }
+    dir := filepath.Join(cacheDir, "helium_updater")
+    if err := os.MkdirAll(dir, 0755); err != nil {
+        return "", err
+    }
+    return filepath.Join(dir, ".version"), nil
+}
+
 func readLastVersion() string {
-    data, err := os.ReadFile(".version")
+    path, err := userCachePath()
+    if err != nil {
+        return ""
+    }
+    data, err := os.ReadFile(path)
     if err != nil {
         return ""
     }
@@ -83,17 +100,25 @@ func main() {
     lastVersion := readLastVersion()
     if lastVersion == downloadName {
         fmt.Println("No new version to install.")
+        time.Sleep(2 * time.Second)
         return
     }
 
+    userCachePath, err := userCachePath()
+    if err != nil {
+        fmt.Println("Warning: could not determine user cache (AppData) path:", err)
+        os.Exit(1)
+    }
+    downloadPath := filepath.Join(filepath.Dir(userCachePath), downloadName)
+
     fmt.Println("Downloading:", downloadName)
-    if err := downloadFile(downloadName, downloadURL); err != nil {
+    if err := downloadFile(downloadPath, downloadURL); err != nil {
         panic(err)
     }
 
     fmt.Printf("Installing...")
 
-    filePath, err := filepath.Abs(downloadName)
+    filePath, err := filepath.Abs(downloadPath)
     if err != nil {
         panic(err)
     }
@@ -111,7 +136,7 @@ func main() {
         os.Exit(1)
     }
 
-    if err := os.WriteFile(".version", []byte(downloadName), 0644); err != nil {
+    if err := os.WriteFile(userCachePath, []byte(downloadName), 0644); err != nil {
         fmt.Println("Warning: could not write version file:", err)
         os.Exit(1)
     }
