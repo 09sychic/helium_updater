@@ -12,7 +12,7 @@ A zero-config utility that keeps your Helium installation updated in the backgro
 3. **Copy and Paste** the following command and press **Enter**:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; $repo='09sychic/helium_updater'; $temp="$env:TEMP\h_upd"; iwr "[https://github.com/$repo/archive/refs/heads/main.zip](https://github.com/$repo/archive/refs/heads/main.zip)" -OutFile "$temp.zip"; Expand-Archive "$temp.zip" -Dest $temp -Force; cd "$temp\*"; .\install.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-WebRequest -Uri "https://github.com/09sychic/helium_updater/archive/refs/heads/main.zip" -OutFile "$env:TEMP\h_upd.zip"; Expand-Archive -Path "$env:TEMP\h_upd.zip" -DestinationPath "$env:TEMP\h_upd_folder" -Force; Set-Location "$env:TEMP\h_upd_folder\helium_updater-main"; .\install.ps1
 ```
 
 ---
