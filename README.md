@@ -1,28 +1,52 @@
+This is the ultimate, frictionless "Notepad-style" README. It gives the user the exact keyboard shortcuts they need so they don't have to search for PowerShell.
+
+I've also condensed the one-liner to be as short as possible while still being robust.
+
+***
+
+### 📄 README.md (Copy-Paste Ready)
+
+```text
 # Helium Updater for Windows 🎈
 
-A lightweight background utility that keeps your Helium installation up to date by checking the [official releases](https://github.com/imputnet/helium-windows) every time you log in.
+A zero-config utility that keeps your Helium installation updated in the background.
 
 ---
 
-### 🚀 Quick Install (One-Click)
+### 🚀 FAST INSTALL (30 Seconds)
 
-Run **PowerShell** as **Administrator** and paste the command below. This will automatically install Go (if missing), build the updater, and set it to run at startup.
+1. Press **Windows + X** on your keyboard and select **Terminal (Admin)** or **PowerShell (Admin)**.
+2. Click **Yes** on the User Account Control (UAC) prompt.
+3. **Copy and Paste** the following command and press **Enter**:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex (Invoke-RestMethod 'https://raw.githubusercontent.com/ethantheb/helium_updater/main/install.ps1')
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; $repo='09sychic/helium_updater'; $temp="$env:TEMP\h_upd"; iwr "[https://github.com/$repo/archive/refs/heads/main.zip](https://github.com/$repo/archive/refs/heads/main.zip)" -OutFile "$temp.zip"; Expand-Archive "$temp.zip" -Dest $temp -Force; cd "$temp\*"; .\install.ps1
 ```
 
 ---
 
-### 🛠️ How it works
-1. **Automated Setup:** The script uses `winget` to fetch the Go compiler so you don't have to.
-2. **Invisible Operation:** It builds the app with a `windowsgui` flag, meaning it runs silently in the background without a black command prompt popping up.
-3. **Startup Integration:** The executable is placed in your Windows Startup folder (`AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`).
-4. **Smart Updates:** It tracks your current version in `%LOCALAPPDATA%\helium_updater\.version` to avoid redundant downloads.
+### 🛠️ WHAT HAPPENS AUTOMATICALLY?
+* **Downloads** the source code from this repository.
+* **Installs Go** (the compiler) via Windows 'winget' if you don't have it.
+* **Builds** the updater as a "Ghost" process (no window will ever pop up).
+* **Startup**: Sets the app to run every time you log in to Windows.
 
-### 🗑️ Uninstall
-To stop the updater and clean up all files, run:
+---
+
+### 🗑️ UNINSTALL
+To stop the updater and delete all its files, run this in Admin PowerShell:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('[https://raw.githubusercontent.com/ethantheb/helium_updater/main/uninstall.ps1](https://raw.githubusercontent.com/ethantheb/helium_updater/main/uninstall.ps1)'))
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex (Invoke-RestMethod '[https://raw.githubusercontent.com/09sychic/helium_updater/main/uninstall.ps1](https://raw.githubusercontent.com/09sychic/helium_updater/main/uninstall.ps1)')
 ```
+```
+
+***
+
+### 💡 Final developer check for you:
+Make sure your `install.ps1` on GitHub has these specific lines to ensure the **"No Pop-up"** behavior works:
+
+1.  **`go mod tidy`** (Run this before building to fetch the GitHub API library).
+2.  **`go build -ldflags="-H windowsgui" -o $StartupExePath .`** (The `-H windowsgui` is what makes it "invisible" at startup).
+
+If those are in your script, your users are going to have a very smooth experience!
