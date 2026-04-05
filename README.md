@@ -1,5 +1,5 @@
 
-# Helium Updater for Windows 🎈
+# 09sychic-HeliumSync [Updater] for Windows 🎈
 
 A zero-config utility that keeps your Helium installation updated in the background. 
 This is a fork of the original tool by ethantheb.
@@ -13,7 +13,7 @@ This is a fork of the original tool by ethantheb.
 3. Paste the following command and press **Enter**:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-WebRequest -Uri "[https://github.com/09sychic/helium_updater/archive/refs/heads/main.zip](https://github.com/09sychic/helium_updater/archive/refs/heads/main.zip)" -OutFile "$env:TEMP\h_upd.zip"; Expand-Archive -Path "$env:TEMP\h_upd.zip" -DestinationPath "$env:TEMP\h_upd_folder" -Force; Set-Location "$env:TEMP\h_upd_folder\helium_updater-main"; .\install.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-WebRequest -Uri "[https://github.com/09sychic/09sychic-HeliumSync/archive/refs/heads/main.zip](https://github.com/09sychic/09sychic-HeliumSync/archive/refs/heads/main.zip)" -OutFile "$env:TEMP\h_sync.zip"; Expand-Archive -Path "$env:TEMP\h_sync.zip" -DestinationPath "$env:TEMP\h_sync_folder" -Force; Set-Location "$env:TEMP\h_sync_folder\09sychic-HeliumSync-main"; .\install.ps1
 ````
 
 -----
