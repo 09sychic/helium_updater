@@ -1,4 +1,4 @@
-module github.com/ethantheb/helium_updater
+module github.com/09sychic/09sychic-HeliumSync
 
 go 1.24.4
 
