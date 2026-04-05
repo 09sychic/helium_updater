@@ -9,7 +9,7 @@ A lightweight background utility that keeps your Helium installation up to date 
 Run **PowerShell** as **Administrator** and paste the command below. This will automatically install Go (if missing), build the updater, and set it to run at startup.
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('[https://raw.githubusercontent.com/ethantheb/helium_updater/main/install.ps1](https://raw.githubusercontent.com/ethantheb/helium_updater/main/install.ps1)'))
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex (Invoke-RestMethod 'https://raw.githubusercontent.com/ethantheb/helium_updater/main/install.ps1')
 ```
 
 ---
