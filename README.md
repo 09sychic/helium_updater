@@ -29,8 +29,8 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 ### Credits
 
-  * **Original Developer:** [ethantheb](https://www.google.com/url?sa=E&source=gmail&q=https://github.com/ethantheb) (Original repo: `helium_updater`)
-  * **Maintained by:** [09sychic](https://www.google.com/search?q=https://github.com/09sychic)
+  * **Original Developer:** [ethantheb](https://github.com/ethantheb) (Original repo: `helium_updater`)
+  * **Maintained by:** [09sychic](https://github.com/09sychic)
 
 -----
 
