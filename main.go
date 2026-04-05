@@ -37,7 +37,7 @@ func userCachePath() (string, error) {
     if err != nil {
         return "", err
     }
-    dir := filepath.Join(cacheDir, "helium_updater")
+    dir := filepath.Join(cacheDir, "09sychic-HeliumSync")
     if err := os.MkdirAll(dir, 0755); err != nil {
         return "", err
     }
