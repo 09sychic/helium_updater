@@ -14,7 +14,7 @@ if (!(Get-Command go -ErrorAction SilentlyContinue)) {
 
 # 2. Setup Paths
 $ProjectDir = $PSScriptRoot
-$ExeName = "helium_updater.exe"
+$ExeName = "09sychic-HeliumSync.exe"
 $StartupDir = [System.Environment]::GetFolderPath("Startup")
 $StartupExePath = Join-Path $StartupDir $ExeName
 
