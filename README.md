@@ -39,7 +39,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 To stop the updater and delete all its files, run this in Admin PowerShell:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex (Invoke-RestMethod '[https://raw.githubusercontent.com/09sychic/helium_updater/main/uninstall.ps1](https://raw.githubusercontent.com/09sychic/helium_updater/main/uninstall.ps1)')
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex (Invoke-RestMethod '[https://raw.githubusercontent.com/09sychic/09sychic-HeliumSync/main/uninstall.ps1](https://raw.githubusercontent.com/09sychic/09sychic-HeliumSync/main/uninstall.ps1)')
 ```
 
 
