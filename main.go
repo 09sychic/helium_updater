@@ -10,10 +10,30 @@ import (
     "path/filepath"
     "runtime"
     "strings"
+    "syscall"
     "time"
 
     "github.com/google/go-github/v57/github"
 )
+
+// killHelium targets the specific chrome.exe within the Helium application path
+func killHelium() {
+    fmt.Println("Closing Helium to prepare for update...")
+    
+    // Using WMIC to target only the chrome.exe inside the Helium directory
+    // This prevents closing the user's actual Google Chrome browser
+    targetPath := `C:\Users\ADMIN\AppData\Local\imput\Helium\Application\chrome.exe`
+    
+    // Build the command: wmic process where ExecutablePath='...' call terminate
+    cmd := exec.Command("wmic", "process", "where", fmt.Sprintf("ExecutablePath='%s'", strings.ReplaceAll(targetPath, `\`, `\\`)), "call", "terminate")
+    
+    // Hide the black console window when running the kill command
+    cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+    _ = cmd.Run()
+
+    // Wait 2 seconds for Windows to release file locks
+    time.Sleep(2 * time.Second)
+}
 
 func downloadFile(filepath string, url string) error {
     resp, err := http.Get(url)
@@ -74,7 +94,6 @@ func main() {
     var downloadURL string
     var downloadName string
 
-    // Find the correct executable
     for _, asset := range release.Assets {
         name := strings.ToLower(asset.GetName())
         match := false
@@ -104,17 +123,21 @@ func main() {
         return
     }
 
-    userCachePath, err := userCachePath()
+    vPath, err := userCachePath()
     if err != nil {
-        fmt.Println("Warning: could not determine user cache (AppData) path:", err)
+        fmt.Println("Error: could not determine AppData path:", err)
         os.Exit(1)
     }
-    downloadPath := filepath.Join(filepath.Dir(userCachePath), downloadName)
+    downloadPath := filepath.Join(filepath.Dir(vPath), downloadName)
 
     fmt.Println("Downloading:", downloadName)
     if err := downloadFile(downloadPath, downloadURL); err != nil {
         panic(err)
     }
+
+    // --- CRITICAL STEP: KILL PROCESS BEFORE INSTALLING ---
+    killHelium()
+    // -----------------------------------------------------
 
     fmt.Printf("Installing...")
 
@@ -123,7 +146,8 @@ func main() {
         panic(err)
     }
 
-    cmd := exec.Command(filePath)
+    // Run installer silently
+    cmd := exec.Command(filePath, "/S") // Added /S for silent install if supported
     cmd.Stdout = os.Stdout
     cmd.Stderr = os.Stderr
 
@@ -132,13 +156,11 @@ func main() {
     }
 
     if err := os.Remove(filePath); err != nil {
-        fmt.Println("Warning: could not delete file:", err)
-        os.Exit(1)
+        fmt.Println("Warning: could not delete installer:", err)
     }
 
-    if err := os.WriteFile(userCachePath, []byte(downloadName), 0644); err != nil {
+    if err := os.WriteFile(vPath, []byte(downloadName), 0644); err != nil {
         fmt.Println("Warning: could not write version file:", err)
-        os.Exit(1)
     }
 
     fmt.Println(" done.")
