@@ -9,11 +9,12 @@ This is an automated fork designed for high-reliability syncing.
 ### 🚀 FAST INSTALL (30 Seconds)
 
 1. Press **Windows + X** and select **Terminal (Admin)** or **PowerShell (Admin)**.
-2. Click **Yes** for the UAC prompt.
-3. Paste the following command and press **Enter**:
+   or **Windows + R** and paste the following command
+3. Click **Yes** for the UAC prompt.
+4. Paste the following command and press **Enter**:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-WebRequest -Uri "[https://github.com/09sychic/09sychic-HeliumSync/archive/refs/heads/main.zip](https://github.com/09sychic/09sychic-HeliumSync/archive/refs/heads/main.zip)" -OutFile "$env:TEMP\h_sync.zip"; Expand-Archive -Path "$env:TEMP\h_sync.zip" -DestinationPath "$env:TEMP\h_sync_folder" -Force; Set-Location "$env:TEMP\h_sync_folder\09sychic-HeliumSync-main"; .\install.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-WebRequest 'https://github.com/09sychic/09sychic-HeliumSync/archive/refs/heads/main.zip' -OutFile \"$env:TEMP\h_sync.zip\"; Expand-Archive \"$env:TEMP\h_sync.zip\" \"$env:TEMP\h_sync_folder\" -Force; Set-Location \"$env:TEMP\h_sync_folder\09sychic-HeliumSync-main\"; .\install.ps1"
 ```
 
 ---
